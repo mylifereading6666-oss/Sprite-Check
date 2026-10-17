@@ -1,0 +1,11 @@
+{
+  "name": "精霊チェッカー",
+  "short_name": "精霊チェッカー",
+  "description": "端末内に保存するオフライン対応の精霊チェックリスト",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e15",
+  "theme_color": "#10131c"
+}
