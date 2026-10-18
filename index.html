@@ -54,6 +54,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Jonesy_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Jonesy_L.webp"
@@ -280,6 +295,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp"
@@ -306,6 +336,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_JazzJackrabbit_Cheatmaster_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_JazzJackrabbit_L.webp"
@@ -332,6 +377,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Crown_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Crown_L.webp"
@@ -358,6 +418,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Killswitch_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Killswitch_L.webp"
@@ -384,6 +459,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Klombo_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Klombo_L.webp"
@@ -541,6 +631,21 @@ const starter=[
         "owned": false,
         "master": false,
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_Gold_L.webp"
+      },
+      {
+        "label": "HACKER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "HUNTER",
+        "owned": false,
+        "master": false
+      },
+      {
+        "label": "TRICK",
+        "owned": false,
+        "master": false
       }
     ],
     "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_L.webp"
@@ -2685,6 +2790,23 @@ const starter=[
 const currentSeasonNames=new Set(["Jonesy","Adventure","Bush","Sonic","Tails","Shadow","8-Bit","Jackrabbit","Crown","Killswitch","Klombo","Mega Man","Overshield","X-Ray","Onigiri","Storm Scout","Blinky","Birthday","Crash Bandicoot","Pond","Morgana","Spooky Dash","Vampire","The Deer","Dumpster Dive","Honey","One Wish Willow"]);
 function seasonForSprite(sprite){const n=String(sprite.name||'').replace(/^(Gold|Gummy|Galaxy|Gem|Holofoil|Cube|Cheat Master|Loot Hacker|Bounty Hunter|Trick or Treat|Quack)\\s+/i,'').trim();return currentSeasonNames.has(n)?'C7S4':'C7S3'}
 let sprites=load(), filter='all', toastTimer;
+(function migrateVariants(){
+ const names=new Set(["Jonesy","Adventure","Bush","Sonic","Tails","Shadow","8-Bit","Jackrabbit","Crown","Killswitch","Klombo","Overshield","X-Ray","Onigiri","Storm Scout","Blinky","Birthday","Crash Bandicoot","Pond","Morgana","Spooky Dash","Vampire","The Deer","Dumpster Dive","Honey","One Wish Willow"]);
+ let changed=false;
+ for(const item of sprites){
+  if(!names.has(item.name))continue;
+  if(!Array.isArray(item.variants))item.variants=[];
+  const have=new Set(item.variants.map(v=>String(v.label||"").toUpperCase()));
+  const def=starter.find(x=>x.name===item.name);
+  for(const [label] of [["CHEAT","Cheat Master"],["HACKER","Loot Hacker"],["HUNTER","Bounty Hunter"],["TRICK","Trick or Treat"]]){
+   if(!have.has(label)){
+    const v=def?.variants?.find(x=>String(x.label||"").toUpperCase()===label);
+    if(v){item.variants.push({...v,owned:false,master:false});changed=true;}
+   }
+  }
+ }
+ if(changed){try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}
+})();
 // 初回起動時は登録済みの初期リストを保存して表示する
 if(!sprites.length){sprites=starter.map((s,i)=>({...s,id:'starter_'+i}));try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}} else {let changed=false;for(const d of starter){const old=sprites.find(x=>x.name===d.name);if(!old){sprites.push({...d,id:'starter_'+sprites.length});changed=true;continue;}if(!old.image&&d.image){old.image=d.image;changed=true;}if(Array.isArray(old.variants)&&Array.isArray(d.variants)){for(const v of old.variants){const def=d.variants.find(x=>x.label===v.label);if(def&&!v.image&&def.image){v.image=def.image;changed=true;}}}}if(changed){try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}}
 // シーズン分類を補完。既存の所持・Master・レベル情報は保持する。
