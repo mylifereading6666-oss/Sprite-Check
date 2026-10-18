@@ -2415,6 +2415,8 @@ const starter=[
 {name:'ストームスカウトの精霊（バウンティハンター）',level:0,status:'upcoming'}
 ]
 let sprites=load(), filter='all', toastTimer;
+// 初回起動時は登録済みの初期リストを保存して表示する
+if(!sprites.length){sprites=starter.map((s,i)=>({...s,id:'starter_'+i}));try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}
 const $=id=>document.getElementById(id);
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(sprites));$('saveState').textContent='保存済み';render()}catch{$('saveState').textContent='保存失敗';showToast('端末の保存容量が不足しています。画像を小さくするか、件数を減らしてください。')}}
