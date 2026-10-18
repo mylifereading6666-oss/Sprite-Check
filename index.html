@@ -3018,8 +3018,9 @@ try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}
  }
  if(changed){try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}
 })();
-// 初回起動時は登録済みの初期リストを保存して表示する
-if(!sprites.length){sprites=starter.map((s,i)=>({...s,id:'starter_'+i}));try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}} else {let changed=false;for(const d of starter){const old=sprites.find(x=>x.name===d.name);if(!old){sprites.push({...d,id:'starter_'+sprites.length});changed=true;continue;}if(!old.image&&d.image){old.image=d.image;changed=true;}if(Array.isArray(old.variants)&&Array.isArray(d.variants)){for(const v of old.variants){const def=d.variants.find(x=>x.label===v.label);if(def&&!v.image&&def.image){v.image=def.image;changed=true;}}}}if(changed){try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}}
+// 初回起動時だけ初期リストを保存する。既存データには初期リストを再マージしない。
+// 名前を編集したカードの旧名を、再読み込み時に復活させないため。
+if(!sprites.length){sprites=starter.map((s,i)=>({...s,id:'starter_'+i}));try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}}
 // シーズン分類を補完。既存の所持・Master・レベル情報は保持する。
 for(const sprite of sprites){if(!sprite.season){sprite.season=seasonForSprite(sprite)}}
 try{if(sprites.length)localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}
