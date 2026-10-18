@@ -32,14 +32,12 @@
 (() => {
 const KEY='sprite-check-offline-v1';
 const starter=[
-{name:'ジョンジーの精霊',level:1,status:'available'},
-{name:'ニャッスルの精霊',level:1,status:'available'},
-{name:'ピーリーの精霊',level:1,status:'available'},
-{name:'フィッシュスティックの精霊',level:1,status:'available'},
-{name:'ラマの精霊',level:1,status:'available'},
-{name:'シャドーの精霊',level:1,status:'available'},
-{name:'ネコの精霊',level:1,status:'upcoming'}
-];
+{name:'ストームスカウトの精霊（ノーマル）',level:1,status:'available',image:'https://www.fortnitedex.com/uploads/sprites/stormscout_base.webp'},
+{name:'ストームスカウトの精霊（ゴールド）',level:0,status:'upcoming'},
+{name:'ストームスカウトの精霊（チートマスター）',level:0,status:'upcoming'},
+{name:'ストームスカウトの精霊（ルートハッカー）',level:0,status:'upcoming'},
+{name:'ストームスカウトの精霊（バウンティハンター）',level:0,status:'upcoming'}
+]
 let sprites=load(), filter='all', toastTimer;
 const $=id=>document.getElementById(id);
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
