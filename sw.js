@@ -1,4 +1,4 @@
-const CACHE = 'sprite-check-shell-v11';
+const CACHE = 'sprite-check-shell-v12';
 const FILES = ['./', './index.html', './manifest.webmanifest'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
