@@ -397,10 +397,10 @@ const starter=[
         "label": "BASE",
         "owned": false,
         "master": false,
-        "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp"
+        "image": ""
       }
     ],
-    "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp"
+    "image": ""
   },
   {
     "name": "Overshield",
@@ -487,7 +487,7 @@ const starter=[
         "label": "BASE",
         "owned": false,
         "master": false,
-        "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Dwarf_L.webp"
+        "image": ""
       },
       {
         "label": "GOLD",
@@ -517,7 +517,7 @@ const starter=[
         "master": false
       }
     ],
-    "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Dwarf_L.webp"
+    "image": ""
   },
   {
     "name": "Storm Scout",
@@ -1007,7 +1007,7 @@ const starter=[
         "label": "BASE",
         "owned": false,
         "master": false,
-        "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Default_L.webp"
+        "image": ""
       },
       {
         "label": "CUBE",
@@ -1040,7 +1040,7 @@ const starter=[
         "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Holofoil_L.webp"
       }
     ],
-    "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Default_L.webp"
+    "image": ""
   },
   {
     "name": "Cube Batman",
@@ -2690,6 +2690,15 @@ if(!sprites.length){sprites=starter.map((s,i)=>({...s,id:'starter_'+i}));try{loc
 // シーズン分類を補完。既存の所持・Master・レベル情報は保持する。
 for(const sprite of sprites){if(!sprite.season){sprite.season=seasonForSprite(sprite)}}
 try{if(sprites.length)localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}
+// 既存の端末保存データにも、名前と一致しないと確認できた画像だけを個別に補正する。
+const wrongImagesBySprite={"Adventure":["T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp"],"Mega Man":["T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp"],"Overshield":["T_Icon_BR_Creature_Sprite_Dwarf_L.webp"],"Onigiri":["T_Icon_BR_Creature_Sprite_Dwarf_L.webp"],"Batman":["T_Icon_BR_FossilMeal_Default_L.webp"],"Cube Batman":["T_Icon_BR_Creature_Sprite_Water_Unvault_Ch7S3_ui_L.webp"],"Gummy Water":["T_Icon_BR_Creature_Sprite_Earth_Ch7S3_UI_L.webp"],"Cube Earth":["T_Icon_BR_Duck_Default_L.webp"],"Gummy Duck":["T_Icon_BR_Creature_Sprite_Ghost_Unvault_L.webp"],"Gummy Ghost":["T_Icon_BR_RedDemon_Default_L.webp"],"Gummy Demon":["T_Icon_BR_Creature_Sprite_Punk_ui_L.webp"],"Cube Punk":["T_Icon_BR_Creature_Sprite_King_ui_L.webp"],"Gummy King":["T_Icon_BR_Creature_Sprite_ZeroPoint_ui_L.webp"],"Cube Zero Point":["T_Icon_BR_Creature_Sprite_Fishy_ui_L.webp"],"Cube Fishy":["T_Icon_BR_Creature_Sprite_Boss_ui_L.webp"],"Cube Boss":["T_Icon_BR_GrimReaper_Default_L.webp"],"Cube Grim":["T_Icon_BR_Air_Default_L.webp"],"Gummy Air":["T_Icon_BR_Creature_Sprite_Seven_ui_L.webp"],"Gummy Seven":["T_Icon_BR_Creature_Sprite_Llama_ui_L.webp"],"Gummy Llama":["T_Icon_BR_Creature_Sprite_Peely_ui_L.webp"],"Gummy Peeky Peely":["T_Icon_BR_Creature_Sprite_Soccer_ui_L.webp"]};
+for(const sprite of sprites){
+ const bad=new Set(wrongImagesBySprite[sprite.name]||[]);
+ const clear=(obj)=>{if(obj&&typeof obj.image==='string'&&bad.has(obj.image.split('/').pop()))obj.image=''};
+ clear(sprite);
+ if(Array.isArray(sprite.variants))sprite.variants.forEach(clear);
+}
+try{localStorage.setItem(KEY,JSON.stringify(sprites))}catch(e){}
 const $=id=>document.getElementById(id);
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(sprites));$('saveState').textContent='保存済み';render()}catch{$('saveState').textContent='保存失敗';showToast('端末の保存容量が不足しています。画像を小さくするか、件数を減らしてください。')}}
