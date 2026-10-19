@@ -3045,7 +3045,7 @@ function render(){
  let arr=[...sprites];
  const selectedSeason=$('seasonFilter').value;
  arr=arr.filter(s=>selectedSeason==='all'||(s.season||seasonForSprite(s))===selectedSeason);
- arr=arr.filter(s=>filter==='all'||(filter==='owned'&&(s.variants?s.variants.some(v=>v.owned):s.owned))||(filter==='missing'&&!(s.variants?s.variants.some(v=>v.owned):s.owned))||(filter==='master'&&(s.variants?s.variants.some(v=>v.master):s.master));
+ arr=arr.filter(s=>filter==='all'||(filter==='owned'&&(s.variants?s.variants.some(v=>v.owned):s.owned))||(filter==='missing'&&!(s.variants?s.variants.some(v=>v.owned):s.owned))||(filter==='master'&&(s.variants?s.variants.some(v=>v.master):s.master)));
  const sort=$('sort').value;arr.sort((a,b)=>sort==='level'?(Number(b.level)||0)-(Number(a.level)||0):sort==='owned'?(Number(!!b.owned)-Number(!!a.owned)):(a.name||'').localeCompare(b.name||'','ja'));
  $('total').textContent=sprites.length;$('ownedCount').textContent=sprites.reduce((n,s)=>n+(s.variants?s.variants.filter(v=>v.owned).length:Number(!!s.owned)),0);$('masterCount').textContent=sprites.reduce((n,s)=>n+(s.variants?s.variants.filter(v=>v.master).length:Number(!!s.master)),0);
  const list=$('list');
