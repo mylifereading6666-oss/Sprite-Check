@@ -3078,7 +3078,23 @@ $('importFile').addEventListener('change',async e=>{const f=e.target.files?.[0];
 $('sampleBtn').addEventListener('click',()=>{if(!confirm('サンプルの精霊を、未登録の名前だけ追加しますか？名前は仮の例で、公式情報の確認済みリストではありません。'))return;let n=0;for(const s of starter)if(!sprites.some(x=>x.name===s.name)){sprites.push({id:id(),...s,owned:false,master:false,isNew:false,image:s.image||''});n++}save();showToast(n+'件のサンプルを追加しました')});
 $('clearBtn').addEventListener('click',()=>{if(!confirm('登録した精霊とチェック状況をすべて削除します。この操作は取り消せません。先にバックアップを保存しましたか？'))return;sprites=[];save();showToast('データを削除しました')});
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-render();
+async function applyProvidedSpriteData(){
+ const marker='sprite-check-provided-data-v1';
+ if(localStorage.getItem(marker)==='done'){render();return}
+ try{
+  const response=await fetch('./sprite-check-backup.json',{cache:'no-store'});
+  if(!response.ok)throw Error('data fetch failed');
+  const data=await response.json();
+  if(!Array.isArray(data.sprites)||data.sprites.length!==27)throw Error('invalid sprite data');
+  const existingByName=new Map(sprites.map(s=>[s.name,s]));
+  sprites=data.sprites.map(src=>{
+   const old=existingByName.get(src.name)||{};
+   return {...src,id:old.id||src.id||id(),name:src.name,level:Number.isFinite(Number(old.level))?Number(old.level):Number(src.level)||0,status:src.status==='upcoming'?'upcoming':'available',image:safeUrl(src.image||''),owned:false,master:false,rarity:old.rarity||src.rarity||'',isNew:!!old.isNew,season:src.season||seasonForSprite(src),variants:Array.isArray(src.variants)?src.variants.map((v,i)=>{const ov=(old.variants||[]).find(x=>x.label===v.label)||{};return {...v,label:String(v.label||('VARIANT '+(i+1))),image:safeUrl(v.image||''),level:Number.isFinite(Number(ov.level))?Number(ov.level):Number(v.level)||0,owned:false,master:false}}):[]};
+  });
+  save();localStorage.setItem(marker,'done');showToast('精霊27体を未入手状態で反映しました');
+ }catch(e){console.error(e);render()}
+}
+applyProvidedSpriteData();
 })();
 </script>
 </body>
