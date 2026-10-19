@@ -129,7 +129,7 @@
 - ゲーム由来の画像・名称など第三者素材の権利は、それぞれの権利者に帰属します。制作者がそれらの権利を主張するものではありません。
 - 公開Webアプリのコードや表示画像を技術的に完全にコピー不能にすることはできません。著作権表示と利用条件は、無断利用への抑止と対応の根拠を明確にするためのものです。
 
-詳細は [著作権・利用条件（COPYRIGHT.md）](./COPYRIGHT.md) を確認してください。
+詳細は、公開サイトから直接開ける [著作権・利用条件ページ](https://mylifereading6666-oss.github.io/Sprite-Check/COPYRIGHT.md) を確認してください。GitHub上の文書は [COPYRIGHT.md](https://github.com/mylifereading6666-oss/Sprite-Check/blob/main/COPYRIGHT.md) からも確認できます。
 
 ## 公開URL
 
