@@ -3139,7 +3139,31 @@ $('clearBtn').addEventListener('click',()=>{if(!confirm('登録した精霊と�
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 async function applyProvidedSpriteData(){
  const marker='sprite-check-provided-data-v1';
- if(localStorage.getItem(marker)==='done'){render();return}
+ const variantFixMarker='sprite-check-variant-fix-v2';
+ if(localStorage.getItem(marker)==='done'){
+  if(localStorage.getItem(variantFixMarker)!=='done'){
+   try{
+    const response=await fetch('./sprite-check-backup.json',{cache:'no-store'});
+    if(!response.ok)throw Error('variant data fetch failed');
+    const data=await response.json();
+    let changed=false;
+    for(const src of data.sprites||[]){
+     const current=sprites.find(s=>s.name===src.name);
+     if(!current||!Array.isArray(src.variants))continue;
+     if(!Array.isArray(current.variants))current.variants=[];
+     for(const variant of src.variants){
+      if(!current.variants.some(v=>v.label===variant.label)){
+       current.variants.push({...variant,owned:false,master:false,level:0,image:safeUrl(variant.image||'')});
+       changed=true;
+      }
+     }
+    }
+    if(changed)save();
+    localStorage.setItem(variantFixMarker,'done');
+   }catch(e){console.error('変異データの更新に失敗しました',e)}
+  }
+  render();return
+ }
  try{
   const response=await fetch('./sprite-check-backup.json',{cache:'no-store'});
   if(!response.ok)throw Error('data fetch failed');
